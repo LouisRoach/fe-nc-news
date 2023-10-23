@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios"
+import { Link } from 'react-router-dom';
+
 
 function ArticleList(){
 
@@ -16,8 +18,13 @@ function ArticleList(){
           {articles.map(article => (
             <div key={article.article_id}>
                  <h2>{article.title}</h2>
-          <p>{article.author}</p>
-          <p>{article.topic}</p>
+                 <Link to={`/articles/${article.id}`}>
+             <button>View Article</button>
+          </Link>
+          <p>Author: {article.author}</p>
+          <p>Topic: {article.topic}</p>
+          
+         
                
             </div>
           ))}
