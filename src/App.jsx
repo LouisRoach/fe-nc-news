@@ -4,7 +4,7 @@ import ArticleList from './components/ArticleList'
 import axios from "axios"
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
-
+import ArticleCard from './components/ArticleCard'
 
 function App() {
   const [articles, setArticles] = useState([]);

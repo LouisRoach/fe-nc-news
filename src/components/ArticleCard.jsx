@@ -21,7 +21,7 @@ function ArticleCard() {
       <h2>{article.title}</h2>
       <p>Author: {article.author}</p>
       <p>Topic: {article.topic}</p>
-      <p>Content: {article.content}</p>
+      <p>Body: {article.body}</p>
      
     </div>
   );
