@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios"
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 
 function ArticleList(){
+ 
 
     const [articles, setArticles] = useState([])
 
@@ -28,6 +29,8 @@ function ArticleList(){
           <p>Created At: {article.created_at}</p>
           <p>Votes: {article.votes}</p>
           <img src={article.article_img_url}/>
+
+          
 
           
          
