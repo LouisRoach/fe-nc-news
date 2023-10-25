@@ -3,6 +3,8 @@ import Header from './components/Header'
 import ArticleList from './components/ArticleList'
 import axios from "axios"
 import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import ArticleCard from './components/ArticleCard'
 
 function App() {
   const [articles, setArticles] = useState([]);
@@ -14,8 +16,11 @@ function App() {
   }, []);
   return <div className='App'>
 <Header />
-<ArticleList articles={articles}/>
 
+<Routes>
+        <Route exact path="/" element={<ArticleList />} />
+        <Route path="/articles/:id" element={<ArticleCard />} />
+      </Routes>
 
   </div>
  

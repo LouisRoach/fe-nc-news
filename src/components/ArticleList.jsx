@@ -17,7 +17,11 @@ function ArticleList(){
         <div>
           {articles.map(article => (
             <div key={article.article_id}>
+              <Link to={`/articles/${article.article_id}`}>
                  <h2>{article.title}</h2>
+
+              </Link>
+
                 
           <p>Author: {article.author}</p>
           <p>Topic: {article.topic}</p>
