@@ -34,15 +34,51 @@ function Comments({ articleId }) {
 
 
 function ArticleCard() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [article, setArticle] = useState(null);
+  const [voting, setVoting] = useState(false);
+  const [voteError, setVoteError] = useState(null);
 
   useEffect(() => {
-   
     fetch(`https://louis-api.onrender.com/api/articles/${id}`)
       .then((res) => res.json())
       .then((data) => setArticle(data.article));
   }, [id]);
+
+  const handleVote = (voteType) => {
+    if (voting) {
+      return;
+    }
+
+    setVoting(true);
+    setVoteError(null);
+
+    const voteValue = voteType === "upvote" ? 1 : -1; 
+
+    fetch(`https://louis-api.onrender.com/api/articles/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ inc_votes: voteValue }), 
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Failed to update votes. Please try again.");
+        }
+      })
+      .then((data) => {
+        setArticle(data.result); 
+      })
+      .catch((error) => {
+        setVoteError(error.message);
+      })
+      .finally(() => {
+        setVoting(false);
+      });
+  };
 
   if (!article) {
     return <div>Loading...</div>;
@@ -56,13 +92,17 @@ function ArticleCard() {
       <p>Body: {article.body}</p>
       <p>Created At: {article.created_at}</p>
       <p>Votes: {article.votes}</p>
-      <img src={article.article_img_url}/>
+      <button onClick={() => handleVote("upvote")} disabled={voting}>
+        Upvote
+      </button>
+      <button onClick={() => handleVote("downvote")} disabled={voting}>
+        Downvote
+      </button>
+      {voteError && <p>{voteError}</p>}
+      <img src={article.article_img_url} />
       <Comments articleId={id} />
-
-
-     
     </div>
   );
 }
 
-export default ArticleCard
+export default ArticleCard;
